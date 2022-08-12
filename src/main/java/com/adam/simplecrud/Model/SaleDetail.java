@@ -1,5 +1,7 @@
 package com.adam.simplecrud.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,11 +20,12 @@ public class SaleDetail {
 
     @ManyToOne
     @JoinColumn(name = "id_sale",nullable = false,foreignKey = @ForeignKey(name = "FK_SALE_DETAILS"))
-    private Sale idSale;
+    @JsonIgnore
+    private Sale sale;
 
     @ManyToOne
     @JoinColumn(name = "id_product",nullable = false,foreignKey = @ForeignKey(name = "FK_PRODUCT_DETAILS"))
-    private Product idProduct;
+    private Product product;
 
     @Column(nullable = false)
     private Integer quantity;

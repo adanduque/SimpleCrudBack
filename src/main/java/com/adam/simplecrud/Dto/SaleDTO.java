@@ -1,6 +1,7 @@
 package com.adam.simplecrud.Dto;
 
 import com.adam.simplecrud.Model.Person;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -10,9 +11,12 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class SaleDTO {
     @EqualsAndHashCode.Include
     private Integer idSale;
@@ -21,8 +25,11 @@ public class SaleDTO {
     private LocalDateTime datetime;
 
     @NotNull
-    private Person idPerson	;
+    private Person person	;
 
     @NotNull
     private Integer total;
+
+    @NotNull
+    private List<SaleDetailDTO> details;
 }

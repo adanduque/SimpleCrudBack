@@ -25,6 +25,9 @@ public class ProductDTO {
     private String name;
 
     @NotNull
-    @Size(min = 5, message = "{brand.size}")
+    @Size(min = 4, message = "{brand.size}")
     private String brand;
+
+    @NotNull
+    private Double price;
 }

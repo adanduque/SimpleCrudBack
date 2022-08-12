@@ -8,15 +8,27 @@ import com.adam.simplecrud.Repository.ISaleRepo;
 import com.adam.simplecrud.Service.ISaleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class SaleService extends CRUDImpl<Sale, Integer> implements ISaleService {
 
-    @Autowired
-    private ISaleRepo repo;
+@Autowired
+private ISaleRepo saleRepo;
 
-    @Override
-    protected IGenericRepo<Sale, Integer> getRepo() {
-        return repo;
-    }
+
+@Override
+protected IGenericRepo<Sale, Integer> getRepo() {
+        return saleRepo;
 }
+
+@Transactional
+@Override
+public Sale saveSaleDetail(Sale sale) {
+        //Consult + ConsultDetail
+        sale.getDetails().forEach(det -> det.setSale(sale));
+        saleRepo.save(sale);
+        return sale;
+        }
+}
+

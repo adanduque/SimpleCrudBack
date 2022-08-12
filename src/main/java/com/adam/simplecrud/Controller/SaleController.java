@@ -6,6 +6,7 @@ import com.adam.simplecrud.Exception.ModelNotFoundException;
 import com.adam.simplecrud.Model.Sale;
 import com.adam.simplecrud.Service.ISaleService;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
@@ -38,13 +39,25 @@ public class SaleController {
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<SaleDTO> findById(@PathVariable("id") Integer id) {
+        SaleDTO dtoResponse;
+        Sale obj = service.findById(id);
+        if (obj == null) {
+            throw new ModelNotFoundException("ID NOT FOUND: " + id);
+        } else {
+            dtoResponse = mapper.map(obj, SaleDTO.class);
+        }
+        return new ResponseEntity<>(dtoResponse, HttpStatus.OK);
+    }
+
 
     @PostMapping
     public ResponseEntity<Void> save(@Valid @RequestBody SaleDTO dto) {
-        Sale p = service.save(mapper.map(dto, Sale.class));
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(p.getIdSale()).toUri();
+        Sale c = mapper.map(dto, Sale.class);
+        Sale obj = service.saveSaleDetail(c);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getIdSale()).toUri();
         return ResponseEntity.created(location).build();
     }
-
 
 }

@@ -1,5 +1,6 @@
 package com.adam.simplecrud.Controller;
 
+import com.adam.simplecrud.Dto.SaleDTO;
 import com.adam.simplecrud.Dto.SaleDetailDTO;
 import com.adam.simplecrud.Model.SaleDetail;
 import com.adam.simplecrud.Service.ISaleDetailService;
@@ -35,7 +36,7 @@ public class SaleDetailController {
 
 
     @PostMapping
-    public ResponseEntity<Void> save(@Valid @RequestBody SaleDetailDTO dto) {
+    public ResponseEntity<Void> save(@Valid @RequestBody SaleDTO dto) {
         SaleDetail p = service.save(mapper.map(dto, SaleDetail.class));
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(p.getIdSaleDetail()).toUri();
         return ResponseEntity.created(location).build();

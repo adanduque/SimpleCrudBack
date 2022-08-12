@@ -1,18 +1,21 @@
 package com.adam.simplecrud.Model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
-@Data
+@Getter
+@Setter
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Sale {
-
+    @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idSale;
@@ -22,8 +25,11 @@ public class Sale {
     @ManyToOne
     @JoinColumn(name = "id_person",nullable = false,foreignKey = @ForeignKey(name = "FK_SALE_PERSON"))
     //FK_SALE_PERSON
-    private Person idPerson	;
+    private Person person	;
 
     @Column(nullable = false)
     private Integer total;
+
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "sale", cascade = {CascadeType.ALL }, orphanRemoval = true)
+    private List<SaleDetail> details =new ArrayList<>();;
 }

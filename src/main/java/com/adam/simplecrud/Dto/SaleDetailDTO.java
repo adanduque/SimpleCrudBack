@@ -2,6 +2,8 @@ package com.adam.simplecrud.Dto;
 
 import com.adam.simplecrud.Model.Product;
 import com.adam.simplecrud.Model.Sale;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -20,10 +22,11 @@ public class SaleDetailDTO {
     private Integer idSaleDetail;
 
     @NotNull
-    private Sale idSale;
+    @JsonIgnore
+    private Sale sale;
 
     @NotNull
-    private Product idProduct;
+    private Product product;
 
     @NotNull
     private Integer quantity;

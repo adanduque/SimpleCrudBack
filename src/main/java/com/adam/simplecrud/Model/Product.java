@@ -21,4 +21,7 @@ public class Product {
 
     @Column(length = 100,nullable = false)
     private String brand;
+
+    @Column(nullable = false)
+    private Double price;
 }
